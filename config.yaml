@@ -1,0 +1,32 @@
+
+groups:
+  - Col-0
+  - Col-0
+  - Col-0
+  - Col-0
+  - dcl3
+  - dcl3
+  - dcl3
+  - dcl3
+  - dcl234
+  - dcl234
+  - dcl234
+  - dcl234
+  - hen1
+  - hen1
+  - hen1
+  - hen1
+
+group_vs:
+  - 1 4
+  - 7 10
+
+group_info:
+  WT: wild-type
+  MT: mutant 
+
+gene_anno: /home/lpeng/Gmatic5/genome/tair10/tair10_gene_anno.tsv
+
+design_table: design_table.tsv
+
+fold_change: 2
