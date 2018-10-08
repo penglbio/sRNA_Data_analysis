@@ -1,5 +1,5 @@
 ##length destribution PCA 
-
+getwd()
 data <- read.table("/var/data/06.Richa_sRNA/smallRNA/7.table/sRNA_counts_win_w_header.tsv",header = T,stringsAsFactors = F)
 sample <- read.table("/var/data/06.Richa_sRNA/smallRNA/7.table/sample.tsv",header = T,stringsAsFactors = F)
 outfig <- "/var/data/06.Richa_sRNA/smallRNA/9.fig/"
@@ -59,3 +59,33 @@ plot(x[,1], x[,2],xlim=range(x[,1])*1.1, ylim=range(x[,2])*1.1, col=cols, cex=2,
 )
 legend(700,1000,unique(sample$Sample_ID),pch = 16:19,col = set2_cols,bty="n")
 dev.off()
+getwd()
+itg<-read.table("/var/data/06.Richa_sRNA/smallRNA/12.sRNA_QC_data/intergenetic_sRNA.tsv")
+gene<-read.table("/var/data/06.Richa_sRNA/smallRNA/12.sRNA_QC_data/gene_sRNA.tsv")
+TE<-read.table("/var/data/06.Richa_sRNA/smallRNA/12.sRNA_QC_data/TE_sRNA.tsv")
+pseudo<-read.table("/var/data/06.Richa_sRNA/smallRNA/12.sRNA_QC_data/pseudogene_sRNA.tsv")
+
+gene_counts<-colSums(gene[,11:26])
+itg_counts<-colSums(itg[,5:20])
+TE_counts<-colSums(TE[,5:20])
+pseudo_counts<-colSums(pseudo[,11:26])
+all_couns<- colSums(data)
+gene_counts
+itg_counts
+TE_counts
+pseudo_counts
+names(all_couns)<-names(gene_counts)
+others<-all_couns-rowSums(cbind(gene_counts,pseudo_counts,TE_counts,itg_counts))
+classify_table<-cbind(gene_counts,pseudo_counts,TE_counts,itg_counts,others)
+rownames(classify_table)<-1:16
+pdf("sRNA_in_genome_region_classify.pdf",height = 5,width = 10)
+colors=brewer.pal(5, 'Set1')
+par(pdx=T,mar=c(3,4,4,6))
+for( i in 1:16){
+  pie(classify_table[i,],main=paste0("sample",i,"_classify"),init.angle = 90,col=colors,border = "white",labels = NA)
+  legend(1,-0.2,legend = c("gene","pseudogene","TE","intergenic","other"),pch=16,col=colors,bty = "n")
+}
+dev.off()
+
+?legend
+
